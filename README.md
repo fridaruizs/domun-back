@@ -1,5 +1,5 @@
 # domun-back
-Este es el mvp para el proyecto 
+Aguante domun?
 
 # instalar dependecias
 
