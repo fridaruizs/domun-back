@@ -1,0 +1,11 @@
+nombre 
+    String
+apellido
+    String
+mail 
+    String
+ubicacion 
+    barrio? 
+    string 
+biografia 
+    String
