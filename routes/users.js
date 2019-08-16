@@ -6,7 +6,7 @@ const { getUsers, getUser, createUser, editUser, deleteUser } = require('../cont
 
 router.get('/all', getUsers);
 router.get('/', getUser);
-router.post('/', createUser);
+router.post('/signup', createUser);
 router.patch('/', editUser);
 router.delete('/', deleteUser);
 
