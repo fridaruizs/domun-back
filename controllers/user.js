@@ -2,8 +2,8 @@ const User = require('../models/User');
 
 exports.getUsers = async (req, res) => {
   try {
-    const { name } = req.body;
-    if (!name) return res.status(400).send('name is required');
+    //const { name } = req.body;
+    //if (!name) return res.status(400).send('name is required');
     const users = await User.find();
     return res.json(users);
   } catch (err) {
