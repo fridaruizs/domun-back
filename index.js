@@ -7,10 +7,12 @@ const db = require('./config/db').mongoURI;
 const userRoutes = require('./routes/users');
 // SetUp mongodb
 mongoose
-  .connect(db, { useNewUrlParser: true })
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
-
 // Settings
 app.set('port', process.env.PORT || 5000);
 
