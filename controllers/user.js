@@ -14,24 +14,53 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-exports.createUser = async (req, res) => {
-  try {
-    const { name, surname, password, location, email, category } = req.body;
-    if (!name) return res.status(400).send('name is required');
-    if (!surname) return res.status(400).send('surname is required');
-    if (!password) return res.status(400).send('password is required');
-    if (!location) return res.status(400).send('location is required');
-    if (!email) return res.status(400).send('email is required');
-    if (!category) return res.status(400).send('category is required');
-    const newUser = new User({ name, surname, password, location, email, category });
-    return res.json(newUser);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send('an error ocurred while creating the user');
-  }
-};
 
-exports.getUser = async (req, res) => {
+
+module.exports.createUser = (req, res, next) => {
+  User.find({ email: req.body.email })
+    .exec()
+    .then(user => {
+      if (user.length >= 1) {
+        return res.status(409).json({
+          message: "Mail exists"
+        });
+      } else {
+        bcrypt.hash(req.body.password, 10, (err, hash) => {
+          if (err) {
+            return res.status(500).json({
+              error: err
+            });
+          } else {
+            const user = new User({
+              _id: new mongoose.Types.ObjectId(),
+              email: req.body.email,
+              name: req.body.name,
+              surname: req.body.surname,
+              password: hash,
+              //address: req.body.address,
+              location: req.body.location,
+              category: req.body.category
+            });
+            user
+              .save()
+              .then(result => {
+                console.log(result);
+                res.status(201).json({
+                  message: "User created"
+                });
+              })
+              .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                  error: err
+                });
+              });
+          }
+        });
+      }
+    });
+};
+module.exports.getUser = async (req, res) => {
   try {
     const { name } = req.body;
     if (!name) return res.status(400).send('name is required');
@@ -44,7 +73,7 @@ exports.getUser = async (req, res) => {
   }
 };
 
-exports.editUser = async (req, res) => {
+module.exports.editUser = async (req, res) => {
   try {
     const { name, surname, password, location, email, category } = req.body;
     if (!name) return res.status(400).send('name is required');
@@ -59,7 +88,7 @@ exports.editUser = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => {
+module.exports.deleteUser = async (req, res) => {
   try {
     const { name } = req.body;
     if (!name) return res.status(400).send('name is required');
