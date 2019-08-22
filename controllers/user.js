@@ -1,7 +1,7 @@
 
 const mongoose = require("mongoose");
 const User = require('../models/User');
-
+const bcrypt = require("bcrypt");
 exports.getUsers = async (req, res) => {
   try {
     //const { name } = req.body;
