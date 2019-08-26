@@ -10,6 +10,7 @@ router.post('/signup', createUser);
 router.patch('/edit', editUser);
 router.delete('/delete', deleteUser);
 
+
 router.get('/show-data', (req, res) => {
   res.send({
     Texto: 'Shabat Shalom',

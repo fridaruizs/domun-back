@@ -75,11 +75,11 @@ module.exports.getUser = async (req, res) => {
 
 module.exports.editUser = async (req, res) => {
   try {
-    const { name, surname, password, location, email, category } = req.body;
+    const { name, surname, password, location, email, category, servicios} = req.body;
     if (!name) return res.status(400).send('name is required');
     const updatedUser = await User.updateOne(
       { name },
-      { surname, password, location, email, category }
+      { surname, password, location, email, category , servicios }
     );
     return res.json(updatedUser);
   } catch (err) {
