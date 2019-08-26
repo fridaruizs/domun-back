@@ -62,7 +62,7 @@ module.exports.createUser = (req, res, next) => {
 };
 module.exports.getUser = async (req, res) => {
   try {
-    const { name } = req.header.name;
+    const { name } = req.query;
     if (!name) return res.status(400).send('name is required');
     const user = await User.findOne({ name });
     if (!user) return res.status(404).send('could not find user');
