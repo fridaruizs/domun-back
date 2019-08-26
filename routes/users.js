@@ -13,7 +13,7 @@ router.delete('/delete', deleteUser);
 
 router.get('/show-data', (req, res) => {
   res.send({
-    Texto: 'Shabat Shalom',
+    Texto: 'שבת שלום',
   });
 });
 
