@@ -2,14 +2,23 @@ const express = require('express');
 
 const router = express.Router();
 
-const { getUsers, getUser, createUser, editUser, deleteUser } = require('../controllers/user');
+const {
+  getUsers,
+  getUser,
+  editUser,
+  deleteUser,
+  userSignUp,
+  userLogin,
+  getUserEmail,
+} = require('../controllers/user');
 
 router.get('/all', getUsers);
 router.get('/find', getUser);
-router.post('/signup', createUser);
+router.post('/signup', userSignUp);
 router.patch('/edit', editUser);
 router.delete('/delete', deleteUser);
-
+router.post('/login', userLogin);
+router.post('/get-by-email', getUserEmail);
 router.get('/show-data', (req, res) => {
   res.send({
     Texto: 'Shabat Shalom',
