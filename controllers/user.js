@@ -3,6 +3,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 let config = require('../config/token-config');
+const fs = require('fs');
 exports.getUsers = async (req, res) => {
   try {
     //const { name } = req.body;
@@ -30,6 +31,12 @@ module.exports.userSignUp = (req, res, next) => {
               error: err,
             });
           } else {
+            const img = fs.readFileSync(req.photo.path);
+            const encode_image = img.toString('base64');
+            const finalImg = {
+              contentType: req.photo.mimetype,
+              image: new Buffer(encode_image, 'base64'),
+            };
             const user = new User({
               _id: new mongoose.Types.ObjectId(),
               email: req.body.email,
@@ -39,6 +46,7 @@ module.exports.userSignUp = (req, res, next) => {
               //address: req.body.address,
               location: req.body.location,
               category: req.body.category,
+              photo: finalImg,
             });
             user
               .save()
